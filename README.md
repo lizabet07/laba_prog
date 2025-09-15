@@ -1,10 +1,10 @@
 1) Имя и возраст
-![alt text](image.png)
+![alt text](images/img01.png)
 2) Сумма и среднее арифмитеческое 
-![alt text](image-1.png)
+![alt text](images/img02.png)
 3) Цена (₽), скидка (%), НДС (%) 
-![alt text](image-2.png)
+![alt text](images/img03.png)
 4) Программа переводит минуты в формат ЧЧ:ММ
-![alt text](image-3.png)
+![alt text]( images/img04.png)
 5) Программа выводит инициалы из ФИО пользователя(двухсмелнная формулировка)
-![alt text](image-4.png)
+![alt text](images/img05.png)
