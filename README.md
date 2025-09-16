@@ -44,6 +44,11 @@ print(f'Результат перевода: {hours}:{mins}')
 
 ### Задание 5
 ```python
-print("hello world")
+print('Давайте узнаем ваши инициалы')
+fio = input('ФИО:')
+name = fio.split()
+ini = name[0][:1] + '.' + name[1][:1] + '.' + name[2][:1] + '.'
+print(ini)
+print(len(fio.replace(' ', '')))
 ```
 ![Картинка 1](images/img05.png)
