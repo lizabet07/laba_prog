@@ -52,3 +52,18 @@ print(ini)
 print(len(fio.replace(' ', '')))
 ```
 ![Картинка 1](images/img05.png)
+### Задание 6
+```python
+N = int(input())
+och = []
+zaoch = []
+while N > 0:
+    fio = input()
+    N = N - 1
+    if 'True' in fio:
+        och.append(fio)
+    elif 'False' in fio:
+        zaoch.append(fio)
+print(len(och), len(zaoch))
+```
+![Картинка 1](images/img06.png)
