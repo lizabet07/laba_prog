@@ -5,7 +5,7 @@ def flatten(mat: list[list | tuple]) -> list:
             if str(j) in "0123456789":
                 answ.append(j)
             else:
-                return "TypeError"    
+                raise "TypeError"    
     return answ
 print(flatten([[1, 2], [3, 4]]))
 print(flatten(([1, 2], (3, 4, 5))))

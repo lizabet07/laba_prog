@@ -4,27 +4,27 @@
 ```python
 def min_max(nums: list[float | int]) -> tuple[float | int, float | int]:
     if not nums:
-        return 'ValueError'
+        raise 'ValueError'
     mn = min(nums)
     mx = max(nums)
     return (mn, mx)
 
 print(min_max([3, -1, 5, 5, 0]))
 print(min_max([42]))
-print(min_max([]))
 print(min_max([-5, -2, -9]))
 print(min_max([1.5, 2, 2.0, -3.1]))
+print(min_max([]))
 ```
-![Картинка 1](./images/lab02/image201.png)
+![Картинка 1](./images/lab02/image2201.png)
 
 #### unique_sorted.py
 ```python
 def unique_sorted(nums):
-    return sorted(set(nums))
+    raise sorted(set(nums))
 print(unique_sorted([3, 1, 2, 1, 3]))
-print(unique_sorted([]))
 print(unique_sorted([-1, -1, 0, 2, 2]))
 print(unique_sorted([1.0, 1, 2.5, 2.5, 0]))
+print(unique_sorted([]))
 ```
 ![Картинка 1](./images/lab02/image202.png)
 
@@ -37,14 +37,14 @@ def flatten(mat: list[list | tuple]) -> list:
             if str(j) in "0123456789":
                 answ.append(j)
             else:
-                return "TypeError"    
+                raise "TypeError"    
     return answ
 print(flatten([[1, 2], [3, 4]]))
 print(flatten(([1, 2], (3, 4, 5))))
 print(flatten([[1], [], [2, 3]]))
 print(flatten([[1, 2], "ab"]))
 ```
-![Картинка 1](./images/lab02/image203.png)
+![Картинка 1](./images/lab02/image2203.png)
 
 ### Задание B — matrix.py
 #### transpose
@@ -56,7 +56,7 @@ def transpose(mat: list[list[float | int]]) -> list[list]:
     row_len = len(mat[0]) #длина первой строки
     for row in mat:
         if len(row) != row_len:
-            return 'ValueError'
+            raise 'ValueError'
 
     rows, cols = len(mat), row_len
     result = []
@@ -74,32 +74,19 @@ print(transpose([[1, 2], [3, 4]]))
 print(transpose([]))
 print(transpose([[1, 2], [3]]))
 ```
-![Картинка 1](./images/lab02/image204.png)
+![Картинка 1](./images/lab02/image2204.png)
 
 #### row_sums
 ```python
 def row_sums(mat: list[list[float | int]]) -> list[float]:
-    if not mat:
-        return []
-    
-    row_len = len(mat[0])
-    for row in mat:
-        if len(row) != row_len:
-            return 'ValueError'
-        
-    result = []
-    for i in range(len(mat)):
-        total = 0
-        for j in range(len(mat[i])):
-            total += mat[i][j]
-        result.append(float(total))
-    return result
+    if not mat or any(len(row) != len(mat[0]) for row in mat): raise ValueError
+    return [float(sum(row)) for row in mat]
 print(row_sums([[1, 2, 3], [4, 5, 6]]))
 print(row_sums([[-1, 1], [10, -10]]))
 print(row_sums([[0, 0], [0, 0]]))
 print(row_sums([[1, 2], [3]]))
 ```
-![Картинка 1](./images/lab02/image205.png)
+![Картинка 1](./images/lab02/image2205.png)
 
 #### col_sums
 ```python
@@ -110,7 +97,7 @@ def col_sums(mat: list[list[float | int]]) -> list[float]:
     row_len = len(mat[0])
     for row in mat:
         if len(row) != row_len:
-            return 'ValueError'
+            raise 'ValueError'
     
     rows , cols = len(mat), row_len
     result = []
@@ -126,13 +113,13 @@ print(col_sums([[-1, 1], [10, -10]]))
 print(col_sums([[0, 0], [0, 0]]))
 print(col_sums([[1, 2], [3]]))
 ```
-![Картинка 1](./images/lab02/image206.png)
+![Картинка 1](./images/lab02/image2206.png)
 
 ### Задание C — tuples.py
 ```python
 def format_record(student: tuple[str, str, float]) -> str:
     if len(student) != 3: #проверяем, что ровно 3 элемента в кортеже
-        return "ValueError"
+        raise "ValueError"
     
     if not (isinstance(student[0], str) and isinstance(student[1], str) and isinstance(student[2], float)): #проверяем, что именно 1-фио, 2-группа,3-GPA.
         return "TypeError"
@@ -160,7 +147,7 @@ print(format_record(c))
 print(format_record(d))
 print(format_record(e))
 ```
-![Картинка 1](./images/lab02/image207.png)
+![Картинка 1](./images/lab02/image2207.png)
 
 ## Лабораторная работа 1
 

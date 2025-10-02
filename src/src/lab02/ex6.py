@@ -5,7 +5,7 @@ def col_sums(mat: list[list[float | int]]) -> list[float]:
     row_len = len(mat[0])
     for row in mat:
         if len(row) != row_len:
-            return 'ValueError'
+            raise 'ValueError'
     
     rows , cols = len(mat), row_len
     result = []

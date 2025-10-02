@@ -1,6 +1,6 @@
 def format_record(student: tuple[str, str, float]) -> str:
     if len(student) != 3: #проверяем, что ровно 3 элемента в кортеже
-        return "ValueError"
+        raise "ValueError"
     
     if not (isinstance(student[0], str) and isinstance(student[1], str) and isinstance(student[2], float)): #проверяем, что именно 1-фио, 2-группа,3-GPA.
         return "TypeError"

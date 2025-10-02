@@ -5,7 +5,7 @@ def transpose(mat: list[list[float | int]]) -> list[list]:
     row_len = len(mat[0]) #длина первой строки
     for row in mat:
         if len(row) != row_len:
-            return 'ValueError'
+            raise 'ValueError'
 
     rows, cols = len(mat), row_len
     result = []
