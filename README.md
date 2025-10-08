@@ -147,5 +147,5 @@ print(format_record(c))
 print(format_record(d))
 print(format_record(e))
 ```
-![Картинка 1](./images/lab02/image2207.png)
+![Картинка 1](./images/lab02/image.png)
 
