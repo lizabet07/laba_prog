@@ -1,6 +1,6 @@
 ## Лабораторная работа 2
 ### Задание 1 — arrays.py
-#### min_max.py
+#### min_max.py минимальное и максимальное
 ```python
 def min_max(nums: list[float | int]) -> tuple[float | int, float | int]:
     if not nums:
@@ -17,7 +17,7 @@ print(min_max([]))
 ```
 ![Картинка 1](./images/lab02/image2201.png)
 
-#### unique_sorted.py
+#### unique_sorted.py отсортированные списки уникальных чисел 
 ```python
 def unique_sorted(nums):
     raise sorted(set(nums))
@@ -28,7 +28,7 @@ print(unique_sorted([]))
 ```
 ![Картинка 1](./images/lab02/image202.png)
 
-#### flatten
+#### flatten выравнивание вложенных списков
 ```python
 def flatten(mat: list[list | tuple]) -> list:
     answ=[]
@@ -47,18 +47,18 @@ print(flatten([[1, 2], "ab"]))
 ![Картинка 1](./images/lab02/image2203.png)
 
 ### Задание B — matrix.py
-#### transpose
+#### transpose преобразование строк в столбцы
 ```python
 def transpose(mat: list[list[float | int]]) -> list[list]:
     if not mat:
         return []
     
-    row_len = len(mat[0]) #длина первой строки
+    row_len = len(mat[0])
     for row in mat:
         if len(row) != row_len:
             raise 'ValueError'
 
-    rows, cols = len(mat), row_len
+    rows, cols = len(mat), row_len 
     result = []
 
     for j in range(cols):         
@@ -76,7 +76,7 @@ print(transpose([[1, 2], [3]]))
 ```
 ![Картинка 1](./images/lab02/image2204.png)
 
-#### row_sums
+#### row_sums сумма строк
 ```python
 def row_sums(mat: list[list[float | int]]) -> list[float]:
     if not mat or any(len(row) != len(mat[0]) for row in mat): raise ValueError
@@ -88,7 +88,7 @@ print(row_sums([[1, 2], [3]]))
 ```
 ![Картинка 1](./images/lab02/image2205.png)
 
-#### col_sums
+#### col_sums сумма элементов в каждом столбце
 ```python
 def col_sums(mat: list[list[float | int]]) -> list[float]:
     if not mat:
