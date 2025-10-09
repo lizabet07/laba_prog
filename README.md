@@ -121,7 +121,7 @@ def format_record(student: tuple[str, str, float]) -> str:
     if len(student) != 3: #проверяем, что ровно 3 элемента в кортеже
         raise "ValueError"
     
-    if not (isinstance(student[0], str) and isinstance(student[1], str) and isinstance(student[2], float)): #проверяем,что фио строковое
+    if not (isinstance(student[0], str) and isinstance(student[1], str) and isinstance(student[2], float)): #проверяем правильный тип данных
         return "TypeError"
 
     fio_parts = student[0].split() # Разделяем ФИО на части
