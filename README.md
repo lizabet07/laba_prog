@@ -50,16 +50,12 @@ def top_n(freq: dict[str, int], n: int = 5) -> list[tuple[str, int]]:
     sorted_items = sorted(freq.items(), key=lambda x: (-x[1], x[0]))
     # 1)проверащаем в список с кортежами, 2)сортируем по частоте, потом по токенам
     return sorted_items[:n]
-tokens1 = ["a","b","a","c","b","a"]
-tokens2 = ["bb","aa","bb","aa","cc"]
 freq1 = count_freq(["a","b","a","c","b","a"])
 freq2 = count_freq(["bb","aa","bb","aa","cc"])
-print(count_freq(["a","b","a","c","b","a"]))
 print(top_n(freq1, n = 2))
-print(count_freq(["bb","aa","bb","aa","cc"]))
 print(top_n(freq2, n =2))
 ```
-![Картинка 1](./images/image03.png)
+![Картинка 1](./images/image05.png)
 
 ### Задание B — src/text_stats.py (скрипт со stdin)
 ####Вводим в PowerShell эту команду для изменения кодировки Windows: $OutputEncoding = [System.Text.Encoding]::UTF8 После этого импортируем файл с функциями и просто создаем функцию с выводом результата. После функции создаем строку, которую принимаем из PowerShell (и декодируем её)
