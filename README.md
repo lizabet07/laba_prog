@@ -58,7 +58,7 @@ print(top_n(freq2, n =2))
 ![Картинка 1](./images/image05.png)
 
 ### Задание B — src/text_stats.py (скрипт со stdin)
-####Вводим в PowerShell эту команду для изменения кодировки Windows: $OutputEncoding = [System.Text.Encoding]::UTF8 После этого импортируем файл с функциями и просто создаем функцию с выводом результата. После функции создаем строку, которую принимаем из PowerShell (и декодируем её)
+#### Вводим в PowerShell эту команду для изменения кодировки Windows: $OutputEncoding = [System.Text.Encoding]::UTF8 После этого импортируем файл с функциями и просто создаем функцию с выводом результата. После функции создаем строку, которую принимаем из PowerShell (и декодируем её)
 ```python
 import sys
 from text import *
