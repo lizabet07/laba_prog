@@ -1,15 +1,10 @@
-from collections import Counter  # удобный класс для подсчёта повторений
-
+from collections import Counter  # ф-ия для подсчёта повторений
 def count_freq(tokens: list[str]) -> dict[str, int]:
     freq = Counter(tokens)
-    return dict(freq)
-
+    return dict(freq) #превращаем в словарь
 def top_n(freq: dict[str, int], n: int = 5) -> list[tuple[str, int]]:
-    def sort_rule(item):
-        word = item[0]
-        count = item[1]
-        return(count,word)
-    sorted_items = sorted(freq.items(), key=sort_rule, reverse=True)
+    sorted_items = sorted(freq.items(), key=lambda x: (-x[1], x[0]))
+    # 1)проверащаем в список с кортежами, 2)сортируем по частоте, потом по токенам
     return sorted_items[:n]
 tokens1 = ["a","b","a","c","b","a"]
 tokens2 = ["bb","aa","bb","aa","cc"]
