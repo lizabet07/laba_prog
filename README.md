@@ -36,7 +36,8 @@ write_csv([("word","count"),("test",3)], r"C:\Users\HONOR\Documents\GitHub\laba_
 ![Картинка 1](./images/image02.png)
 ![Картинка 1](./images/image03.png)
 
-###Задание B — скрипт src/lab04/text_report.py
+### Задание B — скрипт src/lab04/text_report.py
+
 ```python
 import csv
 import re
