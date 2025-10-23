@@ -1,91 +1,84 @@
-## Лабораторная работа 3
-### Задание A — src/lib/text.py
-#### normalize - приведение текста к стандартному виду
+## Лабораторная работа 4
+### Задание A — модуль src/lab04/io_txt_csv.py
 ```python
-import re  # модуль для работы с регулярными выражениями
+import csv
+from pathlib import Path
 
-def normalize(text: str, *, casefold: bool = True, yo2e: bool = True) -> str:
-    if not isinstance(text, str):
-        raise TypeError
+def read_text(path: str | Path, encoding: str = "utf-8") -> str:
+    try:
+        return Path(path).read_text(encoding=encoding)
+    except FileNotFoundError:
+        return "Такого файла нету"
+    except UnicodeDecodeError:
+        return "Неудалось изменить кодировку"
 
-    text = re.sub(r'\s+', ' ', text)
+def write_csv(rows: list[tuple | list], path: str | Path, header: tuple[str, ...] | None = None) -> None:
+    p = Path(path)
+    with p.open('w', newline="", encoding="utf-8") as file: # контроль переноса строк,кодироввка файла
+        f = csv.writer(file)
+        if header is None and rows == []:
+            file_c.writerow(('a', 'b')) 
+        if header is not None:
+            f.writerow(header)
+        if rows != []:
+            const = len(rows[0])
+            for i in rows:
+                if len(i) != const:
+                    return ValueError
+        f.writerows(rows)
 
-    if yo2e:
-        text = text.replace('ё', 'е').replace('Ё', 'Е')
+def ensure_parent_dir(path: str | Path) -> None:
+    Path(path).parent.mkdir(parents=True, exist_ok=True)
 
-    if casefold:
-        text = text.casefold()
-
-    return text.strip()
-print(normalize("ПрИвЕт\nМИр\t"))        
-print(normalize("ёжик, Ёлка")) 
-print(normalize("Hello\r\nWorld"))      
-print(normalize("  двойные   пробелы  "))
+print(read_text(r"C:\Users\HONOR\Documents\GitHub\laba_prog\data\input.txt"))
+write_csv([("word","count"),("test",3)], r"C:\Users\HONOR\Documents\GitHub\laba_prog\data\check.csv") 
 ```
 ![Картинка 1](./images/image01.png)
-
-#### tokenize - разбивает слова на отдельные слова/части
-```python
-import re
-def tokenize(text: str) -> list[str]:
-    if not isinstance(text,str):
-        raise TypeError
-    tokens = re.findall(r'[\w-]+', text) 
-    return tokens
-print(tokenize("привет мир"))
-print(tokenize("hello,world!!!"))
-print(tokenize("по-настоящему круто"))
-print(tokenize("2025 год"))
-print(tokenize("emoji 😀 не слово"))
-```
 ![Картинка 1](./images/image02.png)
+![Картинка 1](./images/image03.png)
 
-#### count_freq + top_n - сколько раз повторяется каждое слово
+###Задание B — скрипт src/lab04/text_report.py
 ```python
-from collections import Counter  # ф-ия для подсчёта повторений
-def count_freq(tokens: list[str]) -> dict[str, int]:
-    freq = Counter(tokens)
-    return dict(freq) #превращаем в словарь
-def top_n(freq: dict[str, int], n: int = 5) -> list[tuple[str, int]]:
-    sorted_items = sorted(freq.items(), key=lambda x: (-x[1], x[0]))
-    # 1)проверащаем в список с кортежами, 2)сортируем по частоте, потом по токенам
-    return sorted_items[:n]
-freq1 = count_freq(["a","b","a","c","b","a"])
-freq2 = count_freq(["bb","aa","bb","aa","cc"])
-print(top_n(freq1, n = 2))
-print(top_n(freq2, n =2))
-```
-![Картинка 1](./images/image05.png)
+import csv
+import re
+import os #пути и файлы
+import sys #работа с путями
 
-### Задание B — src/text_stats.py (скрипт со stdin)
-#### Вводим в PowerShell эту команду для изменения кодировки Windows: $OutputEncoding = [System.Text.Encoding]::UTF8 После этого импортируем файл с функциями и просто создаем функцию с выводом результата. После функции создаем строку, которую принимаем из PowerShell (и декодируем её)
-```python
-import sys
-from text import *
-def stats(text):
+# Добавляем путь к корневой папке проекта 
+project_root = os.path.join(os.path.dirname(__file__), '..')
+sys.path.insert(0, project_root)
 
-    # Нормализация текста
-    text = normalize(text)
+from lib.text import normalize, tokenize, count_freq, top_n
 
-    # Разбиваем на слова
-    tokens = tokenize(text)
+# Пути к файлам относительно корня проекта
+input_path = os.path.join(project_root, 'data', 'input.txt')
+output_path = os.path.join(project_root, 'data', 'report.csv')
 
-    # Подсчёт частот
-    freq = count_freq(tokens)
+# Читаем весь файл в правильной кодировке
+with open(input_path, 'r', encoding='utf-8') as f:
+    text = f.read() 
 
-    # Топ-5 слов
-    top = top_n(freq, n=5)
+normalized = normalize(text)
+words = tokenize(normalized)
+freq = count_freq(words)
 
-    # Вывод статистики
-    print(f"Всего слов: {len(tokens)}")
-    print(f"Уникальных слов: {len(freq)}")
-    print("Топ-5:")
-    for word, count in top:
-        print(f"{word}:{count}")
+# Сохраняем отчет в CSV
+sorted_words = sorted(freq.items(), key=lambda x: (-x[1], x[0]))
 
-text_in = sys.stdin.buffer.read().decode('utf-8')
-stats(text_in)
+with open(output_path, 'w', encoding='utf-8', newline='') as f:
+    writer = csv.writer(f)
+    writer.writerow(['word', 'count'])
+    for word, count in sorted_words:
+        writer.writerow([word, count])
 
+# Печатаем резюме
+print(f"Всего слов: {len(words)}")
+print(f"Уникальных слов: {len(freq)}")
+print("Топ-5:")
+
+top_5 = top_n(freq, 5)
+for i, (word, count) in enumerate(top_5, 1):
+    print(f"  {i}. {word}: {count}")
 ```
 ![Картинка 1](./images/image04.png)
-![Картинка 1](./images/image.png)
+![Картинка 1](./images/image05.png)
