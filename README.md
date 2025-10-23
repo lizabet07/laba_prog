@@ -33,7 +33,6 @@ def ensure_parent_dir(path: str | Path) -> None:
 print(read_text(r"C:\Users\HONOR\Documents\GitHub\laba_prog\data\input.txt"))
 write_csv([("word","count"),("test",3)], r"C:\Users\HONOR\Documents\GitHub\laba_prog\data\check.csv") 
 ```
-![Картинка 1](./images/image01.png)
 ![Картинка 1](./images/image02.png)
 ![Картинка 1](./images/image03.png)
 
