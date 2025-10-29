@@ -1,4 +1,8 @@
 # Лабороторные работы распределены по веткам
+## laba 2 - https://github.com/lizabet07/laba_prog/tree/laba_2
+## laba 3 - https://github.com/lizabet07/laba_prog/tree/laba_3
+## laba 4 - https://github.com/lizabet07/laba_prog/tree/laba_4
+## laba 5 - https://github.com/lizabet07/laba_prog/tree/laba_5
 ## Лабораторная работа 1
 
 ### Задание 1
