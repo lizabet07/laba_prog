@@ -1,84 +1,65 @@
-## Лабораторная работа 4
-### Задание A — модуль src/lab04/io_txt_csv.py
+## Лабораторная работа 5
+### Задание A — JSON ↔ CSV
 ```python
+
 import csv
-from pathlib import Path
+import json
+import sys
+import os
 
-def read_text(path: str | Path, encoding: str = "utf-8") -> str:
-    try:
-        return Path(path).read_text(encoding=encoding)
-    except FileNotFoundError:
-        return "Такого файла нету"
-    except UnicodeDecodeError:
-        return "Неудалось изменить кодировку"
+def json_to_csv(json_path: str, csv_path: str) -> None: #функция конвертанции JSON в CSV
+    if not os.path.exists(json_path): #проверяет, существует ли файл по указанному пути
+        print("FileNotFoundError") #если не существует выдает ошибку
+    if os.path.getsize(json_path) == 0: #получает размер файла в байтах и проверяет, равен ли размер нулю (пустой файл или нет)
+        print("ValueError1")
+        sys.exit(1) #завершает программу с кодом ошибка 1
+    with open(json_path, 'r', encoding='utf-8') as json_file: #безопасно открывае файл для прочтения(автомвтически закрывает после использовния #json_path - путь к файлу
+        json_data = json.load(json_file) #закгружает и преобразовывает JSON данные в Python объект #json_data - переменная, содержащая данные из JSON файла
+        if not all(type(x) == dict for x in json_data): #type(x) == dict - проверяет, является ли элемент словарем
+                                                        #for x in json_data - перебирает все элементы в данных
+                                                        #all() - проверяет, что ВСЕ элементы соответствуют условию
+                                                        #if not all() - если НЕ все элементы являются словарями
+            print("ValueError2") #если не все элементы подходят под условие выдает ошибку
+            sys.exit(1)
 
-def write_csv(rows: list[tuple | list], path: str | Path, header: tuple[str, ...] | None = None) -> None:
-    p = Path(path)
-    with p.open('w', newline="", encoding="utf-8") as file: # контроль переноса строк,кодироввка файла
-        f = csv.writer(file)
-        if header is None and rows == []:
-            file_c.writerow(('a', 'b')) 
-        if header is not None:
-            f.writerow(header)
-        if rows != []:
-            const = len(rows[0])
-            for i in rows:
-                if len(i) != const:
-                    return ValueError
-        f.writerows(rows)
+    with open(csv_path, 'w', newline='', encoding='utf-8') as csvfile: #открывает CSV файл для записи(или замены)                                                                           #newline='' - убирает лишние пустые строки 
+        writer = csv.DictWriter(csvfile, fieldnames=json_data[0].keys()) #csv.DictWriter() - создает объект для записи CSV из словарей
+                                                                         #fieldnames=json_data[0].keys() - название колонок берутся из ключей первого словаря
+        writer.writeheader() #запиывает заголовок(название колонок) в CSV файл
+        writer.writerows(json_data) #записывает все данные из JSON в CSV файл
 
-def ensure_parent_dir(path: str | Path) -> None:
-    Path(path).parent.mkdir(parents=True, exist_ok=True)
+def csv_to_json(csv_path: str, json_path: str) -> None: #функция конвертанции CSV в JSON
+    if not os.path.exists(csv_path): #проверяет, существует ли файл по указанному пути
+        print("FileNotFoundError")  #если не существует выдает ошибку
+        sys.exit(1) #завершает программу с кодом ошибка 1
+    if os.path.getsize(csv_path) == 0: #получает размер файла в байтах и проверяет, равен ли размер нулю (пустой файл или нет)
+        print("ValueError3")
+        sys.exit(1) #завершает программу с кодом ошибка 1
+    with open(csv_path, 'r', encoding='utf-8') as csvfile: #безопасно открывае файл для прочтения(автомвтически закрывает после использовния #csv_path - путь к файлу
+        reader = csv.reader(csvfile) #создает объект для чтения CSV
+        header = next(reader, None) #читает первую строку(заголовок), NONE - значение по умолчанию, если файл пустой
+        if not header: #проверяет, что заголовк есть
+            print("ValueError4") #если заголовка нет выводит ошибку
+            sys.exit(1)
+        reader = csv.DictReader(csvfile) #читает файл
+        data = list(reader) #преобразовывет все данные в список
+    with open(json_path, 'w', encoding='utf-8') as jsonfile:  #открывает JSON файл для записи(или замены)            
+        json.dump(data, jsonfile, ensure_ascii=False, indent=4) #json.dump() - записывает Python объект в JSON файл
+                                                                #ensure_ascii=False - разрешает русские символы
+                                                                #indent=4 - красивое форматирование с отступами
+csv_to_json(r"C:\Users\darin\Documents\GitHub\python_labs\date\samples\people.csv",r"C:\Users\darin\Documents\GitHub\python_labs\date\out\people_from_csv.json")
 
-print(read_text(r"C:\Users\HONOR\Documents\GitHub\laba_prog\data\input.txt"))
-write_csv([("word","count"),("test",3)], r"C:\Users\HONOR\Documents\GitHub\laba_prog\data\check.csv") 
+json_to_csv( r"C:\Users\darin\Documents\GitHub\python_labs\date\samples\people.json",  r"C:\Users\darin\Documents\GitHub\python_labs\date\out\people_from_json.csv" )    
 ```
+![Картинка 1](./images/image01.png)
 ![Картинка 1](./images/image02.png)
 ![Картинка 1](./images/image03.png)
+![Картинка 1](./images/image04.png)
 
-### Задание B — скрипт src/lab04/text_report.py
+### Задание B — CSV → XLSX
 
 ```python
-import csv
-import re
-import os #пути и файлы
-import sys #работа с путями
 
-# Добавляем путь к корневой папке проекта 
-project_root = os.path.join(os.path.dirname(__file__), '..')
-sys.path.insert(0, project_root)
-
-from lib.text import normalize, tokenize, count_freq, top_n
-
-# Пути к файлам относительно корня проекта
-input_path = os.path.join(project_root, 'data', 'input.txt')
-output_path = os.path.join(project_root, 'data', 'report.csv')
-
-# Читаем весь файл в правильной кодировке
-with open(input_path, 'r', encoding='utf-8') as f:
-    text = f.read() 
-
-normalized = normalize(text)
-words = tokenize(normalized)
-freq = count_freq(words)
-
-# Сохраняем отчет в CSV
-sorted_words = sorted(freq.items(), key=lambda x: (-x[1], x[0]))
-
-with open(output_path, 'w', encoding='utf-8', newline='') as f:
-    writer = csv.writer(f)
-    writer.writerow(['word', 'count'])
-    for word, count in sorted_words:
-        writer.writerow([word, count])
-
-# Печатаем резюме
-print(f"Всего слов: {len(words)}")
-print(f"Уникальных слов: {len(freq)}")
-print("Топ-5:")
-
-top_5 = top_n(freq, 5)
-for i, (word, count) in enumerate(top_5, 1):
-    print(f"  {i}. {word}: {count}")
 ```
 ![Картинка 1](./images/image04.png)
 ![Картинка 1](./images/image05.png)
