@@ -1,6 +1,7 @@
 import os
 import csv
 import sys
+from pathlib import Path
 
 from openpyxl import Workbook #из библиотеки openpyx1 импортирует только класс Workbook для создаия Excel файлов
 
@@ -8,9 +9,15 @@ def csv_to_xlsx(csv_path: str, xlsx_path: str) -> None: #функция конв
     if not os.path.exists(csv_path): #если не существует файл по указанному пути, то 
         print("FileNotFoundError") #выводит сообщение об ошибке
         sys.exit(1) #завершает программу с кодом ошибки 1
+    xlsx_path=Path(xlsx_path)
+    csv_path=Path(csv_path)
+    if xlsx_path.suffix.lower() != ".xlsx":
+        raise ValueError(f"Неверный формат выходного файла: ожидается .xlsx")
+    if csv_path.suffix.lower() != ".csv":
+        raise ValueError(f"Неверный формат входного файла: ожидается .csv")
 
     if os.path.getsize(csv_path) == 0: #получает размер в байтах и проверяет не равен ли он 0 (пустой файл) 
-        print("1ValueError")
+        print("ValueError")
         sys.exit(1)
     wb = Workbook() #создаем новую Excel книгу
     ws = wb.active #берем первый лист 

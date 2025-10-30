@@ -2,14 +2,14 @@
 ### Задание A — JSON ↔ CSV
 ```python
 import csv, json, sys, os
-
+from pathlib import Path
 def is_valid_json_file(file_path: str) -> bool:
     try:
         if not os.path.exists(file_path) or os.path.getsize(file_path) == 0:
             return False
         
         with open(file_path, 'r', encoding='utf-8') as file:
-            json_data = json.load(file)  # Загружаем и переводим JSON данные из файла
+            json_data = json.load(file)
             return isinstance(json_data, list) and len(json_data) > 0 and all(isinstance(item, dict) for item in json_data) #все элементы в списке являются словарями
     except:
         return False
@@ -30,6 +30,13 @@ def json_to_csv(json_path: str, csv_path: str) -> None:
     if not is_valid_json_file(json_path): # Проверяем валидность CSV файла с помощью нашей функции
         print("ValueError: Input file is not a valid JSON or is empty")
         sys.exit(1) # Завершаем программу с кодом ошибки 1
+    json_path=Path(json_path)
+    csv_path=Path(csv_path)
+    if json_path.suffix.lower() != ".json":
+        raise ValueError(f"Неверный формат входного файла: ожидается .json")
+    if csv_path.suffix.lower() != ".csv":
+        raise ValueError(f"Неверный формат выходного файла: ожидается .csv")
+    
 
     with open(json_path, 'r', encoding='utf-8') as json_file:
         json_data = json.load(json_file) # Загружаем и парсим JSON данные в переменную json_data
@@ -43,6 +50,12 @@ def csv_to_json(csv_path: str, json_path: str) -> None:
     if not is_valid_csv_file(csv_path):
         print("ValueError: Input file is not a valid CSV or is empty")
         sys.exit(1)
+    json_path=Path(json_path)
+    csv_path=Path(csv_path)
+    if json_path.suffix.lower() != ".json":
+        raise ValueError(f"Неверный формат выходного файла: ожидается .json")
+    if csv_path.suffix.lower() != ".csv":
+        raise ValueError(f"Неверный формат входного файла: ожидается .csv")
 
     with open(csv_path, 'r', encoding='utf-8') as csvfile:
         reader = csv.DictReader(csvfile)  # Создаем объект DictReader для чтения CSV в виде словарей
@@ -65,6 +78,7 @@ json_to_csv( r"C:\Users\HONOR\Documents\GitHub\laba_prog\data\samples\people.jso
 import os
 import csv
 import sys
+from pathlib import Path
 
 from openpyxl import Workbook #из библиотеки openpyx1 импортирует только класс Workbook для создаия Excel файлов
 
@@ -72,6 +86,12 @@ def csv_to_xlsx(csv_path: str, xlsx_path: str) -> None: #функция конв
     if not os.path.exists(csv_path): #если не существует файл по указанному пути, то 
         print("FileNotFoundError") #выводит сообщение об ошибке
         sys.exit(1) #завершает программу с кодом ошибки 1
+    xlsx_path=Path(xlsx_path)
+    csv_path=Path(csv_path)
+    if xlsx_path.suffix.lower() != ".xlsx":
+        raise ValueError(f"Неверный формат выходного файла: ожидается .xlsx")
+    if csv_path.suffix.lower() != ".csv":
+        raise ValueError(f"Неверный формат входного файла: ожидается .csv")
 
     if os.path.getsize(csv_path) == 0: #получает размер в байтах и проверяет не равен ли он 0 (пустой файл) 
         print("ValueError")
@@ -94,7 +114,7 @@ def csv_to_xlsx(csv_path: str, xlsx_path: str) -> None: #функция конв
                 max_length = max(max_length, len(str(cell.value))) #обновляет длину строкиб сравнивая прошлое значение с настоящим 
         ws.column_dimensions[column_letter].width = max(max_length + 2, 8) #обращается к настройкам ширины конкретной колонки, устанавливает ширину колонки, максимальная длина + 2 символа для отступа, 8- выбирает большее значение между расчитанной шириной и минимальной шириной 8 
     wb.save(xlsx_path) #сохраняет Excel книгу по указанному пути
-csv_to_xlsx(r"C:\Users\darin\Documents\GitHub\python_labs\date\samples\cities.csv", r"C:\Users\darin\Documents\GitHub\python_labs\date\out\people.xlsx")    
+csv_to_xlsx(r"C:\Users\HONOR\Documents\GitHub\laba_prog\data\samples\cities.csv", r"C:\Users\HONOR\Documents\GitHub\laba_prog\data\out\people.xlsx")    
 ```
 ![Картинка 1](./images/image05.png)
 ![Картинка 1](./images/image06.png)
