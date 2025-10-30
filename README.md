@@ -2,7 +2,7 @@
 ### Задание A — JSON ↔ CSV
 ```python
 import csv, json, sys, os
-from pathlib import Path
+from pathlib import Path 
 def is_valid_json_file(file_path: str) -> bool:
     try:
         if not os.path.exists(file_path) or os.path.getsize(file_path) == 0:
