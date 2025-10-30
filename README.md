@@ -2,7 +2,19 @@
 ### Задание A — JSON ↔ CSV
 ```python
 import csv, json, sys, os
-from pathlib import Path
+from pathlib import Path 
+
+def right_json(path: str)-> bool:
+    path=Path(path)
+    if path.suffix.lower() != ".json":
+        return False
+
+def right_csv(path: str)-> bool:
+    path=Path(path)
+    if path.suffix.lower() != ".csv":
+        return False
+
+
 def is_valid_json_file(file_path: str) -> bool:
     try:
         if not os.path.exists(file_path) or os.path.getsize(file_path) == 0:
@@ -30,12 +42,10 @@ def json_to_csv(json_path: str, csv_path: str) -> None:
     if not is_valid_json_file(json_path): # Проверяем валидность CSV файла с помощью нашей функции
         print("ValueError: Input file is not a valid JSON or is empty")
         sys.exit(1) # Завершаем программу с кодом ошибки 1
-    json_path=Path(json_path)
-    csv_path=Path(csv_path)
-    if json_path.suffix.lower() != ".json":
-        raise ValueError(f"Неверный формат входного файла: ожидается .json")
-    if csv_path.suffix.lower() != ".csv":
-        raise ValueError(f"Неверный формат выходного файла: ожидается .csv")
+    if not right_json(json_path):
+        print("ValueError: неверный формат файла")
+    if not right_csv(csv_path):
+        print("ValueError: неверный формат файла")
     
 
     with open(json_path, 'r', encoding='utf-8') as json_file:
@@ -50,12 +60,10 @@ def csv_to_json(csv_path: str, json_path: str) -> None:
     if not is_valid_csv_file(csv_path):
         print("ValueError: Input file is not a valid CSV or is empty")
         sys.exit(1)
-    json_path=Path(json_path)
-    csv_path=Path(csv_path)
-    if json_path.suffix.lower() != ".json":
-        raise ValueError(f"Неверный формат выходного файла: ожидается .json")
-    if csv_path.suffix.lower() != ".csv":
-        raise ValueError(f"Неверный формат входного файла: ожидается .csv")
+    if not right_json(json_path):
+        print("ValueError: неверный формат файла")
+    if not right_csv(csv_path):
+        print("ValueError: неверный формат файла")
 
     with open(csv_path, 'r', encoding='utf-8') as csvfile:
         reader = csv.DictReader(csvfile)  # Создаем объект DictReader для чтения CSV в виде словарей
@@ -75,7 +83,7 @@ json_to_csv( r"C:\Users\HONOR\Documents\GitHub\laba_prog\data\samples\people.jso
 ### Задание B — CSV → XLSX
 
 ```python
- import os
+import os
 import csv
 import sys
 from pathlib import Path
