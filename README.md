@@ -9,7 +9,7 @@ def is_valid_json_file(file_path: str) -> bool:
             return False
         
         with open(file_path, 'r', encoding='utf-8') as file:
-            json_data = json.load(file)  # Загружаем и переводим JSON в python
+            json_data = json.load(file)  
             return isinstance(json_data, list) and len(json_data) > 0 and all(isinstance(item, dict) for item in json_data) #все элементы в списке являются словарями
     except:
         return False
