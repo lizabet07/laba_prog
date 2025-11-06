@@ -3,6 +3,7 @@
 ### laba 3 - https://github.com/lizabet07/laba_prog/tree/laba_03
 ### laba 4 - https://github.com/lizabet07/laba_prog/tree/laba_04
 ### laba 5 - https://github.com/lizabet07/laba_prog/tree/laba_05
+### laba 6 - https://github.com/lizabet07/laba_prog/tree/laba_06
 ## Лабораторная работа 1
 
 ### Задание 1
