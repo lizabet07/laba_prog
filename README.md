@@ -1,4 +1,4 @@
-## Лабораторная работа 5
+## Лабораторная работа 6
 ### cli_text.py
 ```python
 import sys, os, argparse
