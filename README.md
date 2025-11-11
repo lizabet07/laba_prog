@@ -1,4 +1,4 @@
-## Лабораторная работа 6
+## Лабораторная работа 5
 ### cli_text.py
 ```python
 import sys, os, argparse
@@ -11,11 +11,11 @@ def cat_command(input_file: str, number_lines: bool = False):
     
     try:
         with open(input_file, 'r', encoding='utf-8') as f:
-            for line_number, line in enumerate(f, start=1):
-                if number_lines:
-                    print(f"{line_number:6d}  {line}", end='')
+            for line_number, line in enumerate(f, start=1): #строки нумируем
+                if number_lines:# Если включена нумерация строк
+                    print(f"{line_number:6d}  {line}", end='') # Вывод номера строки (шириной 6 символов) и содержимого строки
                 else:
-                    print(line, end='')
+                    print(line, end='') # Простой вывод строки
     except Exception as e:
         print(f"Ошибка при чтении файла: {e}", file=sys.stderr)
         sys.exit(1)
@@ -31,7 +31,7 @@ def check_file(file_path: str) -> bool:
     return True
 
 def stats_command(input_file: str, top_n: int = 5):
-    if not check_file(input_file):
+    if not check_file(input_file): #проверка файл сущ и доступен для чтения
         sys.exit(1)
     
     if top_n <= 0:
@@ -43,7 +43,7 @@ def stats_command(input_file: str, top_n: int = 5):
             text = f.read()
             stats_text(text, top_n)
 
-    except Exception as e:
+    except Exception as e: # Обработка исключений
         print(f"Ошибка при анализе файла: {e}", file=sys.stderr)
         sys.exit(1)
 
@@ -52,15 +52,15 @@ def main():
     subparsers = parser.add_subparsers(dest="command")
 
     cat_parser = subparsers.add_parser("cat", help="Вывести содержимое файла")
-    cat_parser.add_argument("--input", required=True)
+    cat_parser.add_argument("--input", required=True) #путь к файлу
     cat_parser.add_argument("-n", action="store_true", help="Нумеровать строки")
 
     stats_parser = subparsers.add_parser("stats", help="Частоты слов")
     stats_parser.add_argument("--input", required=True)
-    stats_parser.add_argument("--top", type=int, default=5)
+    stats_parser.add_argument("--top", type=int, default=5) 
 
-    args = parser.parse_args()
-
+    args = parser.parse_args() #преобразует sys.argv в объект args
+    #проверяет какую команду выбрал
     if args.command == "cat":
         cat_command(args.input, args.n)
     elif args.command == "stats":
@@ -134,7 +134,6 @@ def cli_convert():
         else:
             print("Ошибка: Неизвестная команда")
             sys.exit(1)
-            
         return 0
         
     except Exception as e:
@@ -143,8 +142,6 @@ def cli_convert():
 
 if __name__ == "__main__":
     sys.exit(cli_convert())
-
-#python src\lab_6\cli_convert.py json2csv --in data\samples\people.json --out data\out\people_from_json.csv
 ```
 ### Вывод JSON -> CSV:
 ![Картинка 1](./images/image03.png)
