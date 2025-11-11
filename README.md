@@ -45,7 +45,7 @@ def stats_command(input_file: str, top_n: int = 5):
 
     except Exception as e: # Обработка исключений
         print(f"Ошибка при анализе файла: {e}", file=sys.stderr)
-        sys.exit(1) 
+        sys.exit(1)
 
 def main():
     parser = argparse.ArgumentParser(description="Лабораторная №6")
@@ -143,8 +143,6 @@ def cli_convert():
 
 if __name__ == "__main__":
     sys.exit(cli_convert())
-
-#python src\lab_6\cli_convert.py json2csv --in data\samples\people.json --out data\out\people_from_json.csv
 ```
 ### Вывод JSON -> CSV:
 ![Картинка 1](./images/image03.png)
