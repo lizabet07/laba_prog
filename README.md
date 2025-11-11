@@ -45,7 +45,7 @@ def stats_command(input_file: str, top_n: int = 5):
 
     except Exception as e: # Обработка исключений
         print(f"Ошибка при анализе файла: {e}", file=sys.stderr)
-        sys.exit(1) 
+        sys.exit(1)
 
 def main():
     parser = argparse.ArgumentParser(description="Лабораторная №6")
