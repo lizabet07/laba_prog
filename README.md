@@ -1,4 +1,4 @@
-## Лабораторная работа 5
+## Лабораторная работа 6
 ### cli_text.py
 ```python
 import sys, os, argparse
@@ -134,7 +134,6 @@ def cli_convert():
         else:
             print("Ошибка: Неизвестная команда")
             sys.exit(1)
-            
         return 0
         
     except Exception as e:
@@ -153,4 +152,4 @@ if __name__ == "__main__":
 ### Вывод CSV -> XLSX:
 ![Картинка 1](./images/image07.png)
 ### Help:
-![Картинка 1](./images/image08.png)
+![Картинка 1](./images/image88.png)
