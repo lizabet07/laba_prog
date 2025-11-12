@@ -90,7 +90,7 @@ from ex1 import check_file
 
 def cli_convert():
     parser = argparse.ArgumentParser(description="Конвертеры данных")
-    sub = parser.add_subparsers(dest="cmd", required=True)
+    sub = parser.add_subparsers(dest="cmd", required=True) # Создание подпарсеров для разных команд
     
     p1 = sub.add_parser("json2csv")
     p1.add_argument("--in", dest="input", required=True, help="Входной JSON файл")
