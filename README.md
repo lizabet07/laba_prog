@@ -8,6 +8,7 @@ from lib import stats_text
 def cat_command(input_file: str, number_lines: bool = False):
     if not check_file(input_file):
         sys.exit(1)
+
     try:
         with open(input_file, 'r', encoding='utf-8') as f:
             for line_number, line in enumerate(f, start=1): #строки нумируем
@@ -141,6 +142,7 @@ def cli_convert():
 
 if __name__ == "__main__":
     sys.exit(cli_convert())
+    
 ```
 ### Вывод JSON -> CSV:
 ![Картинка 1](./images/image03.png)
@@ -150,5 +152,3 @@ if __name__ == "__main__":
 ![Картинка 1](./images/image06.png)
 ### Вывод CSV -> XLSX:
 ![Картинка 1](./images/image07.png)
-### Help:
-![Картинка 1](./images/image88.png)
