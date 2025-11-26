@@ -5,8 +5,8 @@ from dataclasses import dataclass
 from datetime import datetime, date
 from typing import Dict, Any
 
-@dataclass
-class Student:
+@dataclass # Декоратор, который автоматически генерирует методы __init__, __repr__, __eq__
+class Student: # Объявление класса Student
     fio: str
     birthdate: str
     group: str
@@ -15,17 +15,16 @@ class Student:
     def __post_init__(self):
         """Валидация данных после инициализации"""
         try:
-            datetime.strptime(self.birthdate, "%Y-%m-%d")
+            datetime.strptime(self.birthdate, "%Y-%m-%d") #преобразование строки в дату ГГГГ-ММ-ДД
         except ValueError:
             raise ValueError(f"Invalid date format: {self.birthdate}. Use YYYY-MM-DD")
         
-        # Валидация среднего балла
-        if not (0 <= self.gpa <= 5):
+        if not (0 <= self.gpa <= 5): GPA в диапозоне от 0 до 5
             raise ValueError(f"GPA must be between 0 and 5, got {self.gpa}")
 
     def age(self) -> int:
         """Вычисление возраста студента"""
-        birth_date = datetime.strptime(self.birthdate, "%Y-%m-%d").date()
+        birth_date = datetime.strptime(self.birthdate, "%Y-%m-%d").date() # Преобразование строки даты в объект date
         today = date.today()
         age = today.year - birth_date.year
         
@@ -38,7 +37,7 @@ class Student:
     def to_dict(self) -> Dict[str, Any]:
         """Сериализация объекта в словарь"""
         return {
-            "fio": self.fio,
+            "fio": self.fio, # Ключ "fio" со значением ФИО студента
             "birthdate": self.birthdate,
             "group": self.group,
             "gpa": self.gpa
@@ -48,7 +47,7 @@ class Student:
     def from_dict(cls, data: Dict[str, Any]) -> 'Student':
         """Десериализация объекта из словаря"""
         return cls(
-            fio=data["fio"],
+            fio=data["fio"], # Передача ФИО из словаря
             birthdate=data["birthdate"],
             group=data["group"],
             gpa=data["gpa"]
@@ -61,7 +60,7 @@ class Student:
 if __name__ == "__main__":
     try:
         student = Student(
-            fio="Иванов Иван Иванович",
+            fio="Иванов Иван Иванович", # Аргумент: ФИО
             birthdate="2000-05-15",
             group="SE-01",
             gpa=4.5
