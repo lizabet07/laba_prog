@@ -137,5 +137,5 @@ if __name__ == "__main__":
         print(student)
 ```
 ![Картинка 1](./images/image02.png)
-![Картинка 1](./images/image03png)
-![Картинка 1](./images/image04png)
+![Картинка 1](./images/image03.png)
+![Картинка 1](./images/image04.png)
