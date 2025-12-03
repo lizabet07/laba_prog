@@ -1,6 +1,3 @@
-## Лабораторная работа 8
-### A. Реализовать класс Student (models.py)
-```python
 import csv
 from pathlib import Path
 from models import student 
@@ -84,31 +81,4 @@ class Group():
             wr.writerows(rd)
 if __name__ == "__main__":
      group = Group(r'C:\Users\HONOR\Documents\GitHub\laba_prog\data\students.csv')
-     print(group.add(student('Буянова Елизавета Сергеевна', '2007-05-15', 'БИВТ-25-1', 4.8)))
-```
-
-### Для Для list() 
-```python
-print(group.list())
-```
-![Картинка 1](./images/image01.png)
-### Для Для add() 
-```python
-print(group.add(student('Буянова Елизавета Сергеевна', '2007-05-15', 'БИВТ-25-1', 4.8)))
-```
-![Картинка 1](./images/image02.png)
-### Для Для find() 
-```python
-print(group.find('Иванов Иван Иванович'))
-```
-![Картинка 1](./images/image03.png)
-### Для Для remove() 
-```python
-print(group.remove('Иванов Иван Иванович'))
-```
-![Картинка 1](./images/image04.png)
-### Для Для update() 
-```python
-print(group.update('Васильев Дмитрий Андреевич', **{'birthdate': '2007.06/24', 'group': 'БИВТ-25-4', 'gpa': 4.2}))
-```
-![Картинка 1](./images/image05.png)
+     print(group.update('Васильев Дмитрий Андреевич', **{'birthdate': '2007.06/24', 'group': 'БИВТ-25-4', 'gpa': 4.2}))
