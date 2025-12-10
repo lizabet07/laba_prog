@@ -109,7 +109,7 @@ print(f'Количество элементов в очереди : {len(q)}')
 ```python
 from typing import Any, Iterator, Optional
 
-
+# Класс Node (узел) - базовый элемент связного списка
 class Node:
     __slots__ = ("value", "next")
 
@@ -117,6 +117,7 @@ class Node:
         self.value = value
         self.next = next
 
+    # Метод для представления узла в виде строки
     def __repr__(self) -> str:
         return f"Node({self.value!r})"
 
@@ -128,8 +129,8 @@ class SinglyLinkedList:
       - head, tail, _size
 
     Методы:
-      - append(value)       O(1)
-      - prepend(value)      O(1)
+      - append(value)       O(1) Добавление в конец
+      - prepend(value)      O(1) Добавление в начало
       - insert(idx, value)  O(min(idx, n)) — проход от головы
       - remove(value)       O(n) — удаление первого вхождения (ValueError если не найдено)
       - remove_at(idx)      O(n) — удаление по индексу (IndexError при некорректном индексе)
@@ -139,8 +140,8 @@ class SinglyLinkedList:
     __slots__ = ("head", "tail", "_size")
 
     def __init__(self, iterable=None) -> None:
-        self.head: Optional[Node] = None
-        self.tail: Optional[Node] = None
+        self.head: Optional[Node] =  # Первый узел списка
+        self.tail: Optional[Node] = None # Последний узел списка
         self._size: int = 0
         if iterable:
             for v in iterable:
@@ -151,7 +152,7 @@ class SinglyLinkedList:
         node = Node(value)
         if not self.head:
             self.head = node
-            self.tail = node
+            self.tail = node,
         else:
             assert self.tail is not None
             self.tail.next = node
@@ -170,13 +171,14 @@ class SinglyLinkedList:
         """Вставить по индексу. Допускаются idx==0 и idx==len."""
         if idx < 0 or idx > self._size:
             raise IndexError("insert index out of range")
-        if idx == 0:
+        if idx == 0: # Если вставляем в начало
             self.prepend(value)
             return
-        if idx == self._size:
+        if idx == self._size: # Если вставляем в конец
             self.append(value)
             return
 
+        # Вставка в середину
         prev = self.head
         for _ in range(idx - 1):
             assert prev is not None
@@ -192,17 +194,17 @@ class SinglyLinkedList:
         cur = self.head
         idx = 0
         while cur:
-            if cur.value == value:
-                if prev is None:
-                    self.head = cur.next
+            if cur.value == value: # Если нашли значение
+                if prev is None:# Если удаляем голову
+                    self.head = cur.next # Голова становится следующим узлом
                 else:
                     prev.next = cur.next
-                if cur is self.tail:
-                    self.tail = prev
+                if cur is self.tail: # Если удаляем хвост
+                    self.tail = prev # Хвостом становится предыдущий узел
                 self._size -= 1
                 return
-            prev, cur = cur, cur.next
-            idx += 1
+            prev, cur = cur, cur.next # Переходим к следующему узлу
+            idx += 1 # Увеличиваем индекс
         raise ValueError("remove: value not found in SinglyLinkedList")
 
     def remove_at(self, idx: int) -> None:
@@ -220,8 +222,9 @@ class SinglyLinkedList:
             prev.next = cur.next
         if cur is self.tail:
             self.tail = prev
-        self._size -= 1
+        self._size -= 1 # Уменьшаем счетчик элементов
 
+# Метод для итерации по списку
     def __iter__(self) -> Iterator[Any]:
         cur = self.head
         while cur:
@@ -230,7 +233,7 @@ class SinglyLinkedList:
 
     def __len__(self) -> int:
         return self._size
-
+# Метод для представления списка в виде строки
     def __repr__(self) -> str:
         return f"SinglyLinkedList([{', '.join(repr(x) for x in self)}])"
 
