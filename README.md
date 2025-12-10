@@ -9,10 +9,10 @@ class Stack:
     """Стек (LIFO) на базе list.
 
     Операции:
-      - push(item)      O(1) amortized
-      - pop()           O(1)
+      - push(item)      O(1) amortized добавление в стек
+      - pop()           O(1) удаление из стека
       - peek()          O(1) (возврат None, если пуст)
-      - is_empty()      O(1)
+      - is_empty()      O(1) удаление из стека
       - __len__()       O(1)
     """
 
