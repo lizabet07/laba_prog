@@ -7,6 +7,7 @@
 ### laba 7 - https://github.com/lizabet07/laba_prog/tree/laba_07
 ### laba 8 - https://github.com/lizabet07/laba_prog/tree/laba_08
 ### laba 9 - https://github.com/lizabet07/laba_prog/tree/laba_09
+### laba 10 - https://github.com/lizabet07/laba_prog/tree/laba_10
 
 ## Лабораторная работа 1
 
