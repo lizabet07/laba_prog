@@ -21,7 +21,7 @@ class Stack:
     def __init__(self, iterable=None) -> None:
         self._data: list[Any] = list(iterable) if iterable is not None else []
 
-    def push(self, item: Any) -> None:
+    def push(self, item: Any) -> None: 
         self._data.append(item)
 
     def pop(self) -> Any:
@@ -29,9 +29,11 @@ class Stack:
             raise IndexError("pop from empty Stack")
         return self._data.pop()
 
+  # Метод просмотра верхнего элемента без удаления
     def peek(self) -> Optional[Any]:
         return self._data[-1] if self._data else None
 
+    # Метод проверки стека на пустоту
     def is_empty(self) -> bool:
         return not self._data
 
@@ -46,10 +48,10 @@ class Queue:
     """Очередь (FIFO) на базе collections.deque.
 
     Операции:
-      - enqueue(item)   O(1)
-      - dequeue()       O(1)
-      - peek()          O(1) (возврат None, если пуст)
-      - is_empty()      O(1)
+      - enqueue(item)   O(1)  Добавление в очередь
+      - dequeue()       O(1) Удаление из очереди
+      - peek()          O(1) (возврат None, если пуст)  Просмотр первого элемента
+      - is_empty()      O(1)  Проверка на пустоту
       - __len__()       O(1)
     """
 
